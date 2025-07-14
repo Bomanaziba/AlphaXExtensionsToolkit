@@ -9,7 +9,7 @@
   <Description>Reusable extension methods and helpers for .NET</Description>
   <PackageTags>helpers;extensions;utilities</PackageTags>
   <PackageLicenseExpression>MIT</PackageLicenseExpression>
-  <RepositoryUrl>https://github.com/yourusername/yourrepo</RepositoryUrl>
+  <RepositoryUrl>https://github.com/Bomanaziba/AlphaXExtensionsToolkit</RepositoryUrl>
   <RepositoryType>git</RepositoryType>
 </PropertyGroup>
 
