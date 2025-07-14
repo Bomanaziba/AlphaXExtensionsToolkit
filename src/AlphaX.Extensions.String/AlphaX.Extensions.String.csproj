@@ -14,13 +14,20 @@
   <PackageLicenseExpression>MIT</PackageLicenseExpression>
   <RepositoryUrl>https://github.com/Bomanaziba/AlphaXExtensionsToolkit</RepositoryUrl>
   <RepositoryType>git</RepositoryType>
+
+  <PackageReadmeFile>README.md</PackageReadmeFile>
+
 </PropertyGroup>
+
 
 <ItemGroup>
   <PackageReference Include="MinVer" Version="6.0.0">
     <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     <PrivateAssets>all</PrivateAssets>
   </PackageReference>
+
+  <None Include="docs\README.md" Pack="true" PackagePath="\"/>
+
 </ItemGroup>
 
 </Project>
