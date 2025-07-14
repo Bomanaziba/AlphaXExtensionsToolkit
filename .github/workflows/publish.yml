@@ -2,6 +2,8 @@ name: Publish NuGet Package
 
 on:
   push:
+    tags:
+      - 'v*'
     branches:
       - main
 
@@ -29,7 +31,7 @@ jobs:
 
       - name: Extract version from tag
         id: version
-        run: echo "PACKAGE_VERSION=${GITHUB_REF#refs/heads/main}" >> $GITHUB_OUTPUT
+        run: echo "PACKAGE_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       - name: Pack
         run: dotnet pack --configuration Release /p:PackageVersion=${{ steps.version.outputs.PACKAGE_VERSION }}
