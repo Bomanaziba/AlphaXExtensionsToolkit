@@ -31,10 +31,18 @@ jobs:
 
       - name: Extract version from tag
         id: version
-        run: echo "PACKAGE_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "PACKAGE_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          else
+            echo "PACKAGE_VERSION=" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+      
       - name: Pack
+        if: startsWith(steps.version.outputs.PACKAGE_VERSION, '1') || startsWith(steps.version.outputs.PACKAGE_VERSION, '0')
         run: dotnet pack --configuration Release /p:PackageVersion=${{ steps.version.outputs.PACKAGE_VERSION }}
 
       - name: Push to NuGet
+        if: startsWith(steps.version.outputs.PACKAGE_VERSION, '1') || startsWith(steps.version.outputs.PACKAGE_VERSION, '0')
         run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
