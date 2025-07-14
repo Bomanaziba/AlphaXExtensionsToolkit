@@ -30,5 +30,30 @@ namespace AlphaX.Extensions.String
             }
             return resultantArray;
         }
+
+
+        /// <summary>
+        /// Generates name prefix.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        public static string GenerateNamePrefix(string name)
+        {
+            string prefix = "";
+
+            string[] nameBreakUp = name.Split(' ');
+
+            if (nameBreakUp.Length == 1)
+            {
+                string firstName = nameBreakUp[0];
+
+                prefix = $"{firstName[0]}{firstName[firstName.Length - 1]}";
+            }
+            else
+            {
+                prefix = $"{nameBreakUp[0][0]}{nameBreakUp[nameBreakUp.Length - 1][0]}";
+            }
+
+            return prefix;
+        }
     }
 }
