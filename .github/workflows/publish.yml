@@ -35,10 +35,9 @@ jobs:
       - name: Run Semgrep Scan
         uses: returntocorp/semgrep-action@v1
         with:
-          config: p/ci
           publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
         env:
-          SEMGREP_RULES: auto
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
 
       - name: Extract version from tag
         id: version
