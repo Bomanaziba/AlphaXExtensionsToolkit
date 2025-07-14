@@ -7,7 +7,7 @@ on:
       - 'v*'
   pull_request:
     branches: [ "main" ]
-
+    
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
-      - name: Pack (MinVer will auto-version)
+      - name: Pack (MinVer handles versioning)
         run: dotnet pack --configuration Release
 
       - name: Push to NuGet

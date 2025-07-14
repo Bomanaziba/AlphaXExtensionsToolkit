@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{873F1D69-7C0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaX.Extensions.String", "src\AlphaX.Extensions.String\AlphaX.Extensions.String.csproj", "{54AA332A-6C4B-4B25-A2D3-D1D5D690C870}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DB164792-9F41-4C76-A5D7-8A650E8EC92E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaX.Extensions.String.Tests", "tests\AlphaX.Extensions.String.Tests\AlphaX.Extensions.String.Tests.csproj", "{19F212AC-A6A2-4E9B-BBAB-71579B740FAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{54AA332A-6C4B-4B25-A2D3-D1D5D690C870}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54AA332A-6C4B-4B25-A2D3-D1D5D690C870}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54AA332A-6C4B-4B25-A2D3-D1D5D690C870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19F212AC-A6A2-4E9B-BBAB-71579B740FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19F212AC-A6A2-4E9B-BBAB-71579B740FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19F212AC-A6A2-4E9B-BBAB-71579B740FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19F212AC-A6A2-4E9B-BBAB-71579B740FAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{54AA332A-6C4B-4B25-A2D3-D1D5D690C870} = {873F1D69-7C09-4FD6-83A9-40A3BB83B99F}
+		{19F212AC-A6A2-4E9B-BBAB-71579B740FAA} = {DB164792-9F41-4C76-A5D7-8A650E8EC92E}
 	EndGlobalSection
 EndGlobal

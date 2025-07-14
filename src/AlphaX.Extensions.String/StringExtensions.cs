@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace AlphaX.Extensions.String
 {
     /// <summary>
@@ -13,6 +15,8 @@ namespace AlphaX.Extensions.String
         /// <param name="input">The input.</param>
         public static string FromHexStringToBase64String(this string input)
         {
+            if (input.Length % 2 != 0) throw new ArgumentOutOfRangeException(nameof(input), "Hex string must have even length.");
+
             return System.Convert.ToBase64String(input.FromHexStringToHexByteArray());
         }
 
