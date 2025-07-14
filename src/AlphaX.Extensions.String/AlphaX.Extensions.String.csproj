@@ -26,7 +26,7 @@
     <PrivateAssets>all</PrivateAssets>
   </PackageReference>
 
-  <None Include="docs\README.md" Pack="true" PackagePath="\"/>
+  <None Include="README.md" Pack="true" PackagePath="\"/>
 
 </ItemGroup>
 
