@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace AlphaX.Extensions.String
 {
@@ -58,6 +60,35 @@ namespace AlphaX.Extensions.String
             }
 
             return prefix;
+        }
+
+        /// <summary>
+        /// Deserializes from xml.
+        /// </summary>
+        /// <param name="xml">The xml.</param>
+        /// <typeparam name="T"></typeparam>
+        public static T DeserializeFromXml<T>(this string xml)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (StringReader reader = new StringReader(xml))
+            {
+                return (T)serializer.Deserialize(reader);
+            }
+        }
+
+        /// <summary>
+        /// Serializes to xml.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <typeparam name="T"></typeparam>
+        public static string SerializeToXml<T>(this T obj)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (StringWriter writer = new StringWriter())
+            {
+                serializer.Serialize(writer, obj);
+                return writer.ToString();
+            }
         }
     }
 }
