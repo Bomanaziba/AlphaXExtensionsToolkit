@@ -33,7 +33,7 @@ jobs:
         run: dotnet test --configuration Release --no-build
 
       - name: Run Semgrep Scan
-        uses: returntocorp/semgrep-action@v2
+        uses: returntocorp/semgrep-action@v1
         with:
           config: p/ci
           publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
