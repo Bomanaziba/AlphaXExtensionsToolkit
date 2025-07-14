@@ -1,0 +1,24 @@
+
+# Build artifacts
+bin/
+obj/
+*.dll
+*.exe
+*.app
+*.log
+*.nupkg
+
+# Rider / VS Code / Visual Studio
+.vscode/
+.idea/
+*.user
+*.suo
+
+# NuGet and dotnet cache
+.nuget/
+packages/
+project.lock.json
+
+# Others
+*.DS_Store
+*.env
