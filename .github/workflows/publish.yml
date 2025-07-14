@@ -2,16 +2,25 @@ name: Publish NuGet Package
 
 on:
   push:
-    tags:
-      - 'v*'
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   publish:
+
     runs-on: ubuntu-latest
+    outputs:
+      build_number: ${{ steps.buildnumber.outputs.build_number }}
 
     steps:
+
+      - name: Generate build number
+        id: buildnumber
+        uses: onyxmueller/build-tag-number@v1
+        with:
+          token: ${{secrets.github_token}}
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -29,20 +38,8 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
-      - name: Extract version from tag
-        id: version
-        run: |
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            echo "PACKAGE_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-          else
-            echo "PACKAGE_VERSION=" >> $GITHUB_OUTPUT
-          fi
-        shell: bash
-
       - name: Pack
-        if: ${{ steps.version.outputs.PACKAGE_VERSION != '' }}
-        run: dotnet pack --configuration Release /p:PackageVersion=${{ steps.version.outputs.PACKAGE_VERSION }}
+        run: dotnet pack --configuration Release /p:PackageVersion=${{ 1.0.$BUILD_NUMBER }}
 
       - name: Push to NuGet
-        if: ${{ steps.version.outputs.PACKAGE_VERSION != '' }}
         run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
