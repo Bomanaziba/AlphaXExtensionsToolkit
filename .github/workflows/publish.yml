@@ -35,9 +35,9 @@ jobs:
       - name: Run Semgrep Scan
         uses: returntocorp/semgrep-action@v1
         with:
-          publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
+          publishToken: ${{ secrets.SEMGREP_APP_TOKEN_1 }}
         env:
-          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN_1 }}
 
       - name: Extract version from tag
         id: version
