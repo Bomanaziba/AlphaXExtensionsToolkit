@@ -39,7 +39,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Pack
-        run: dotnet pack --configuration Release /p:PackageVersion=1.0.0.${{ BUILD_NUMBER }}
+        run: dotnet pack --configuration Release /p:PackageVersion=1.0.0.${{ build_number }}
 
       - name: Push to NuGet
         run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
