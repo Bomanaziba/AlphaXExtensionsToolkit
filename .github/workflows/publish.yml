@@ -32,6 +32,14 @@ jobs:
       - name: Run Unit Tests
         run: dotnet test --configuration Release --no-build
 
+      - name: Run Semgrep Scan
+        uses: returntocorp/semgrep-action@v2
+        with:
+          config: p/ci
+          publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
+        env:
+          SEMGREP_RULES: auto
+
       - name: Extract version from tag
         id: version
         run: |
