@@ -52,10 +52,10 @@ namespace AlphaX.Extensions.Generics.Tests
         public void GetGenericTypeName_ShouldThrowArgumentNullException_WhenTypeIsNull()
         {
             // Arrange
-            Type? type = null;
+            Type type = null;
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => type?.GetGenericTypeName());
+            Assert.Throws<ArgumentNullException>(() => type.GetGenericTypeName());
         }
 
         [Fact]
@@ -78,8 +78,8 @@ namespace AlphaX.Extensions.Generics.Tests
         [Fact]
         public void GetGenericTypeName_ObjectIsNull_ThrowsArgumentNullException()
         {
-            object? obj = null;
-            var ex = Assert.Throws<ArgumentNullException>(() => obj?.GetGenericTypeName());
+            object obj = null;
+            var ex = Assert.Throws<ArgumentNullException>(() => obj.GetGenericTypeName());
             Assert.Equal("obj", ex.ParamName);
         }
 
@@ -126,15 +126,15 @@ namespace AlphaX.Extensions.Generics.Tests
 
             // Optionally, verify that the byte array can be deserialized back to the original object
             var deserialized = JsonSerializer.Deserialize<TestClass>(result);
-            Assert.Equal(obj.Id, deserialized?.Id);
-            Assert.Equal(obj.Name, deserialized?.Name);
+            Assert.Equal(obj.Id, deserialized.Id);
+            Assert.Equal(obj.Name, deserialized.Name);
         }
 
         [Fact]
         public void ObjectToByteArray_WithNullObject_ThrowsArgumentNullException()
         {
             // Arrange
-            TestClass? obj = null;
+            TestClass obj = null;
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentNullException>(() => obj.ObjectToByteArray());
@@ -160,8 +160,8 @@ namespace AlphaX.Extensions.Generics.Tests
         [Fact]
         public void ByteArrayToObject_WithNull_ThrowsArgumentNullException()
         {
-            byte[]? bytes = null;
-            Assert.Throws<ArgumentNullException>(() => bytes?.ByteArrayToObject<TestClass>());
+            byte[] bytes = null;
+            Assert.Throws<ArgumentNullException>(() => bytes.ByteArrayToObject<TestClass>());
         }
 
         [Fact]
@@ -186,7 +186,7 @@ namespace AlphaX.Extensions.Generics.Tests
     public class TestClass
     {
         public int Id { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; }
         public override bool Equals(object obj)
         {
             if (obj is not TestClass other) return false;
@@ -195,5 +195,4 @@ namespace AlphaX.Extensions.Generics.Tests
         public override int GetHashCode() => HashCode.Combine(Id, Name);
 
     }
-
 }
