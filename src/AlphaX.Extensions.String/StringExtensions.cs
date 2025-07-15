@@ -29,6 +29,8 @@ namespace AlphaX.Extensions.String
         /// <param name="inputHex">The input hex.</param>
         public static byte[] FromHexStringToHexByteArray(this string inputHex)
         {
+            if (inputHex.Length % 2 != 0) throw new ArgumentOutOfRangeException(nameof(inputHex), "Hex string must have even length.");
+
             var resultantArray = new byte[inputHex.Length / 2];
             for (var i = 0; i < resultantArray.Length; i++)
             {
@@ -42,8 +44,12 @@ namespace AlphaX.Extensions.String
         /// Generates name prefix.
         /// </summary>
         /// <param name="name">The name.</param>
-        public static string GenerateNamePrefix(string name)
+        public static string GenerateNamePrefix(this string name)
         {
+            name = name.Trim();
+
+            if (string.IsNullOrEmpty(name)) return name;
+
             string prefix = "";
 
             string[] nameBreakUp = name.Split(' ');
@@ -76,19 +82,5 @@ namespace AlphaX.Extensions.String
             }
         }
 
-        /// <summary>
-        /// Serializes to xml.
-        /// </summary>
-        /// <param name="obj">The obj.</param>
-        /// <typeparam name="T"></typeparam>
-        public static string SerializeToXml<T>(this T obj)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (StringWriter writer = new StringWriter())
-            {
-                serializer.Serialize(writer, obj);
-                return writer.ToString();
-            }
-        }
     }
 }
