@@ -1,13 +1,11 @@
 using System;
 using Xunit;
 using AlphaX.Extensions.String;
-using AlphaX.Extensions.String.Helpers;
 
 namespace AlphaX.Extensions.String.Tests
 {
     public class StringExtensionsTest
     {
-
         #region FromHexStringToBase64String Tests
 
         [Fact]
@@ -133,45 +131,5 @@ namespace AlphaX.Extensions.String.Tests
         }
 
         #endregion
-
-
-        #region DeserializeFromXml Tests
-
-        [Fact]
-        public void DeserializeFromXml_ValidXml_ReturnsDeserializedObject()
-        {
-            string xml = @"<Person><Name>John Doe</Name><Age>30</Age></Person>";
-            Person person = xml.DeserializeFromXml<Person>();
-            Assert.NotNull(person);
-            Assert.Equal("John Doe", person.Name);
-            Assert.Equal(30, person.Age);
-        }
-
-        [Fact]
-        public void DeserializeFromXml_EmptyXml_ThrowsInvalidOperationException()
-        {
-            string xml = "";
-            Assert.Throws<InvalidOperationException>(() => xml.DeserializeFromXml<Person>());
-        }
-
-        [Fact]
-        public void DeserializeFromXml_InvalidXml_ThrowsInvalidOperationException()
-        {
-            string xml = "<InvalidXml>";
-            Assert.Throws<InvalidOperationException>(() => xml.DeserializeFromXml<Person>());
-        }
-
-        [Fact]
-        public void DeserializeFromXml_XmlWithExtraElements_IgnoresExtraElements()
-        {
-            string xml = @"<Person><Name>Jane</Name><Age>25</Age><Extra>Value</Extra></Person>";
-            Person person = xml.DeserializeFromXml<Person>();
-            Assert.NotNull(person);
-            Assert.Equal("Jane", person.Name);
-            Assert.Equal(25, person.Age);
-        }
-
-        #endregion
     }
 }
-

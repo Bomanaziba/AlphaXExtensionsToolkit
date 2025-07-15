@@ -67,20 +67,5 @@ namespace AlphaX.Extensions.String
 
             return prefix;
         }
-
-        /// <summary>
-        /// Deserializes from xml.
-        /// </summary>
-        /// <param name="xml">The xml.</param>
-        /// <typeparam name="T"></typeparam>
-        public static T DeserializeFromXml<T>(this string xml)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (StringReader reader = new StringReader(xml))
-            {
-                return (T)serializer.Deserialize(reader);
-            }
-        }
-
     }
 }
