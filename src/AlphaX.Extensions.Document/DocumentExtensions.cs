@@ -1,4 +1,8 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using AlphaX.Extensions.Dictionary;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -23,76 +27,80 @@ namespace AlphaX.Extensions.Document
                 var propertyInfo = DictionaryExtensions.GetObjectProp<T>();
                 var fileExtension = Path.GetExtension(file.FileName).ToLower();
 
-                using var stream = new MemoryStream();
-                file.CopyTo(stream);
-                stream.Position = 0;
-
-                if (fileExtension == ".csv")
+                using (var stream = new MemoryStream())
                 {
-                    using var reader = new StreamReader(stream);
-                    var headers = reader.ReadLine()?.Split(',');
+                    file.CopyTo(stream);
+                    stream.Position = 0;
 
-                    while (!reader.EndOfStream)
+                    if (fileExtension == ".csv")
                     {
-                        var line = reader.ReadLine();
-                        if (string.IsNullOrWhiteSpace(line)) continue;
-
-                        var values = line.Split(',');
-                        var dictionary = new Dictionary<string, object>();
-
-                        for (int i = 0; i < headers?.Length; i++)
+                        using (var reader = new StreamReader(stream))
                         {
-                            if (i < values.Length)
+                            var headers = reader.ReadLine()?.Split(',');
+
+                            while (!reader.EndOfStream)
                             {
-                                var headerValue = Regex.Replace(headers[i], @"\s+", "");
-                                dictionary[headerValue] = values[i];
+                                var line = reader.ReadLine();
+                                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                                var values = line.Split(',');
+                                var dictionary = new Dictionary<string, object>();
+
+                                for (int i = 0; i < headers?.Length; i++)
+                                {
+                                    if (i < values.Length)
+                                    {
+                                        var headerValue = Regex.Replace(headers[i], @"\s+", "");
+                                        dictionary[headerValue] = values[i];
+                                    }
+                                }
+
+                                T data = dictionary.DictionaryToObjectFormatter<T>();
+                                dataList.Add(data);
                             }
                         }
-
-                        T data = dictionary.DictionaryToObjectFormatter<T>();
-                        dataList.Add(data);
                     }
-                }
-                else if (fileExtension == ".xls" || fileExtension == ".xlsx")
-                {
-                    ISheet sheet;
-
-                    if (fileExtension == ".xls")
+                    else if (fileExtension == ".xls" || fileExtension == ".xlsx")
                     {
-                        var workbook = new HSSFWorkbook(stream);
-                        sheet = workbook.GetSheetAt(0);
-                    }
-                    else
-                    {
-                        var workbook = new XSSFWorkbook(stream);
-                        sheet = workbook.GetSheetAt(0);
-                    }
+                        ISheet sheet;
 
-                    IRow headerRow = sheet.GetRow(0);
-
-                    for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
-                    {
-                        var row = sheet.GetRow(i);
-                        if (row == null || row.Cells.All(d => d.CellType == CellType.Blank)) continue;
-
-                        var dictionary = new Dictionary<string, object>();
-
-                        foreach (var prop in propertyInfo)
+                        if (fileExtension == ".xls")
                         {
-                            for (int j = 0; j < headerRow.LastCellNum; j++)
-                            {
-                                var header = headerRow.GetCell(j);
-                                if (header == null || header.StringCellValue != prop.Name) continue;
-
-                                var cell = row.GetCell(j);
-                                var headerValue = Regex.Replace(prop.Name, @"\s+", "");
-                                dictionary[headerValue] = cell?.ToString() ?? string.Empty;
-                                break;
-                            }
+                            var workbook = new HSSFWorkbook(stream);
+                            sheet = workbook.GetSheetAt(0);
+                        }
+                        else
+                        {
+                            var workbook = new XSSFWorkbook(stream);
+                            sheet = workbook.GetSheetAt(0);
                         }
 
-                        T data = dictionary.DictionaryToObjectFormatter<T>();
-                        dataList.Add(data);
+                        IRow headerRow = sheet.GetRow(0);
+
+                        for (int i = sheet.FirstRowNum + 1; i <= sheet.LastRowNum; i++)
+                        {
+                            var row = sheet.GetRow(i);
+                            if (row == null || row.Cells.All(d => d.CellType == CellType.Blank)) continue;
+
+                            var dictionary = new Dictionary<string, object>();
+
+                            foreach (var prop in propertyInfo)
+                            {
+                                for (int j = 0; j < headerRow.LastCellNum; j++)
+                                {
+                                    var header = headerRow.GetCell(j);
+                                    if (header == null || header.StringCellValue != prop.Name) continue;
+
+                                    var cell = row.GetCell(j);
+                                    var headerValue = Regex.Replace(prop.Name, @"\s+", "");
+                                    dictionary[headerValue] = cell?.ToString() ?? string.Empty;
+                                    break;
+                                }
+                            }
+
+                            T data = dictionary.DictionaryToObjectFormatter<T>();
+                            dataList.Add(data);
+                        }
                     }
                 }
             }

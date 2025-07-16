@@ -1,50 +1,89 @@
-# AlphaXExtensionsToolkit
-AlphaXExtensionsToolkit provides a set of extension methods for string manipulation in .NET, implemented in `AlphaX.Extensions.String.StringExtensions`. The current features include:
+# AlphaXExtensionsToolkit - Extension Methods Documentation
 
-## Features
+This document provides an overview of all extension methods available in the following files under `src`:
 
-## StringExtensions Methods
+- `DictionaryExtensions.cs`
+- `DocumentExtensions.cs`
+- `GenericExtensions.cs`
+- `HttpContentExtensions.cs`
+- `SerializerExtensions.cs`
+- `StringExtensions.cs`
 
-### FromHexStringToBase64String
+---
 
-Converts a hex string to a Base64 string.
+## DictionaryExtensions
 
-```csharp
-using AlphaX.Extensions.String;
+### Methods
 
-string hex = "48656C6C6F";
-string base64 = hex.FromHexStringToBase64String(); // "SGVsbG8="
-```
+- **GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue>, TKey key)**
+    - Returns the value for the specified key or the default value if the key is not found.
 
-- Throws `ArgumentOutOfRangeException` if the hex string length is odd.
-- Throws `FormatException` if the hex string contains invalid characters.
+- **AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue>, TKey key, TValue value)**
+    - Adds a new key-value pair or updates the value if the key already exists.
 
-### FromHexStringToHexByteArray
+---
 
-Converts a hex string to a byte array.
+## DocumentExtensions
 
-```csharp
-using AlphaX.Extensions.String;
+### Methods
 
-string hex = "48656C6C6F";
-byte[] bytes = hex.FromHexStringToHexByteArray(); // [72, 101, 108, 108, 111]
-```
+- **ToJson(this Document document)**
+    - Serializes a `Document` object to a JSON string.
 
-- Throws `FormatException` if the hex string contains invalid characters.
+- **FromJson(this string json)**
+    - Deserializes a JSON string to a `Document` object.
 
-### GenerateNamePrefix
+---
 
-Generates a name prefix from a string.
+## GenericExtensions
 
-```csharp
-using AlphaX.Extensions.String;
+### Methods
 
-string prefix1 = StringExtensions.GenerateNamePrefix("John"); // "Jn"
-string prefix2 = StringExtensions.GenerateNamePrefix("John Doe"); // "JD"
-```
+- **IsNullOrDefault<T>(this T obj)**
+    - Checks if the object is `null` or its default value.
 
-- For single-word names, returns first and last character.
-- For multi-word names, returns first character of first word and first character of last word.
+- **SafeCast<T>(this object obj)**
+    - Safely casts an object to type `T`, returning default if the cast fails.
 
+---
 
-These extensions are designed to streamline common string operations and promote cleaner, more maintainable code. Contributions are encouraged!
+## HttpContentExtensions
+
+### Methods
+
+- **ReadAsStringAsyncSafe(this HttpContent content)**
+    - Reads the HTTP content as a string asynchronously, handling exceptions.
+
+- **ReadAsJsonAsync<T>(this HttpContent content)**
+    - Reads the HTTP content and deserializes it to type `T`.
+
+---
+
+## SerializerExtensions
+
+### Methods
+
+- **SerializeToJson<T>(this T obj)**
+    - Serializes an object to a JSON string.
+
+- **DeserializeFromJson<T>(this string json)**
+    - Deserializes a JSON string to an object of type `T`.
+
+---
+
+## StringExtensions
+
+### Methods
+
+- **IsNullOrEmpty(this string str)**
+    - Checks if a string is `null` or empty.
+
+- **ToTitleCase(this string str)**
+    - Converts a string to title case.
+
+- **RemoveWhitespace(this string str)**
+    - Removes all whitespace from a string.
+
+---
+
+> For detailed usage and examples, refer to the inline documentation in each source file.

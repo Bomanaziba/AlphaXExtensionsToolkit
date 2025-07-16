@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.IO;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace AlphaX.Extensions.HttpContent
 {
@@ -9,15 +11,23 @@ namespace AlphaX.Extensions.HttpContent
         /// Https content to json string.
         /// </summary>
         /// <param name="content">The content.</param>
-        public static string HttpContentToJsonString(this System.Net.Http.HttpContent content)
+        public static async Task<string> HttpContentToJsonString(this System.Net.Http.HttpContent content)
         {
-            using var responseStream = content.ReadAsStream();
-            using var streamReader = new StreamReader(responseStream);
-            using JsonReader reader = new JsonTextReader(streamReader);
-            JsonSerializer serializer = new();
-            using StringWriter textWriter = new();
-            serializer.Serialize(textWriter, reader);
-            return textWriter.ToString();
+            using (var responseStream = await content.ReadAsStreamAsync())
+            {
+                using (var streamReader = new StreamReader(responseStream))
+                {
+                    using (JsonReader reader = new JsonTextReader(streamReader))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        using (StringWriter textWriter = new StringWriter())
+                        {
+                            serializer.Serialize(textWriter, reader);
+                            return textWriter.ToString();
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -26,13 +36,21 @@ namespace AlphaX.Extensions.HttpContent
         /// <param name="content">The content.</param>
         public static async Task<string> HttpContentToJsonStringAsync(this System.Net.Http.HttpContent content)
         {
-            using var responseStream = await content.ReadAsStreamAsync();
-            using var streamReader = new StreamReader(responseStream);
-            using JsonReader reader = new JsonTextReader(streamReader);
-            JsonSerializer serializer = new();
-            using StringWriter textWriter = new();
-            serializer.Serialize(textWriter, reader);
-            return textWriter.ToString();
+            using (var responseStream = await content.ReadAsStreamAsync())
+            {
+                using (var streamReader = new StreamReader(responseStream))
+                {
+                    using (JsonReader reader = new JsonTextReader(streamReader))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        using (StringWriter textWriter = new StringWriter())
+                        {
+                            serializer.Serialize(textWriter, reader);
+                            return textWriter.ToString();
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -48,7 +66,7 @@ namespace AlphaX.Extensions.HttpContent
                 {
                     using (JsonReader reader = new JsonTextReader(streamReader))
                     {
-                        JsonSerializer serializer = new();
+                        JsonSerializer serializer = new JsonSerializer();
                         return serializer.Deserialize<T>(reader);
                     }
                 }
@@ -60,13 +78,19 @@ namespace AlphaX.Extensions.HttpContent
         /// </summary>
         /// <param name="content">The content.</param>
         /// <typeparam name="T"></typeparam>
-        public static T HttpContentToType<T>(this System.Net.Http.HttpContent content)
+        public static async Task<T> HttpContentToType<T>(this System.Net.Http.HttpContent content)
         {
-            using var responseStream = content.ReadAsStream();
-            using var streamReader = new StreamReader(responseStream);
-            using JsonReader reader = new JsonTextReader(streamReader);
-            JsonSerializer serializer = new();
-            return serializer.Deserialize<T>(reader);
+            using (var responseStream = await content.ReadAsStreamAsync())
+            {
+                using (var streamReader = new StreamReader(responseStream))
+                {
+                    using (JsonReader reader = new JsonTextReader(streamReader))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        return serializer.Deserialize<T>(reader);
+                    }
+                }
+            }
         }
     }
 }
