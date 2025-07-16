@@ -2,6 +2,7 @@ using System;
 using Xunit;
 using AlphaX.Extensions.Generics;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace AlphaX.Extensions.Generics.Tests
 {
@@ -124,8 +125,9 @@ namespace AlphaX.Extensions.Generics.Tests
             Assert.NotNull(result);
             Assert.NotEmpty(result);
 
-            // Optionally, verify that the byte array can be deserialized back to the original object
-            var deserialized = JsonSerializer.Deserialize<TestClass>(result);
+            var json = System.Text.Encoding.UTF8.GetString(result);
+            // Optionally, verify that the byte array can be result back to the original object
+            var deserialized = JsonConvert.DeserializeObject<TestClass>(json);
             Assert.Equal(obj.Id, deserialized.Id);
             Assert.Equal(obj.Name, deserialized.Name);
         }
@@ -175,7 +177,7 @@ namespace AlphaX.Extensions.Generics.Tests
         public void ByteArrayToObject_WithInvalidJson_ThrowsJsonException()
         {
             byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
-            Assert.Throws<JsonException>(() => bytes.ByteArrayToObject<TestClass>());
+            Assert.Throws<JsonReaderException>(() => bytes.ByteArrayToObject<TestClass>());
         }
 
         #endregion
