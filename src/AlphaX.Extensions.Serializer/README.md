@@ -29,9 +29,16 @@ MyType obj = json.FromJson<MyType>();
 
 ## Supported Formats
 
-- JSON
 - XML
-- Binary
+
+## API Reference
+
+- `DeserializeFromXml`
+- `SerializeToXml`
+
+## Contributing
+
+Contributions are welcome! Please submit issues or pull requests via GitHub.
 
 ## License
 

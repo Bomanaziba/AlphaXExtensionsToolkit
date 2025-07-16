@@ -31,9 +31,14 @@ HttpContent content = myObject.ToJsonContent();
 
 ## API Reference
 
-- `ReadAsStringAsyncEx()`
-- `ReadFromJsonAsyncEx<T>()`
-- `ToJsonContent()`
+- `HttpContentToJsonString`
+- `HttpContentToJsonStringAsync`
+- `HttpContentToTypeAsync<T>`
+- `HttpContentToType<T>`
+
+## Contributing
+
+Contributions are welcome! Please submit issues or pull requests via GitHub.
 
 ## License
 

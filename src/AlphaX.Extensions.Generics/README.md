@@ -26,9 +26,17 @@ var result = obj.AsOrDefault<MyType>();
 var distinctItems = myList.DistinctBy(x => x.Property);
 ```
 
-## Documentation
+## API
 
-See [API Reference](./docs/API.md) for detailed usage and examples.
+- `GetGenericTypeName`
+- `ObjectToByteArray`
+- `ByteArrayToObject`
+- `GetObjectProp`
+
+
+## Contributing
+
+Contributions are welcome! Please submit issues or pull requests via GitHub.
 
 ## License
 

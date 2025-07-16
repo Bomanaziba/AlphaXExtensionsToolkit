@@ -8,49 +8,12 @@ namespace AlphaX.Extensions.HttpContent
     {
 
         /// <summary>
-        /// Https content to json string.
-        /// </summary>
-        /// <param name="content">The content.</param>
-        public static async Task<string> HttpContentToJsonString(this System.Net.Http.HttpContent content)
-        {
-            using (var responseStream = await content.ReadAsStreamAsync())
-            {
-                using (var streamReader = new StreamReader(responseStream))
-                {
-                    using (JsonReader reader = new JsonTextReader(streamReader))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        using (StringWriter textWriter = new StringWriter())
-                        {
-                            serializer.Serialize(textWriter, reader);
-                            return textWriter.ToString();
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Https content to json string async.
         /// </summary>
         /// <param name="content">The content.</param>
         public static async Task<string> HttpContentToJsonStringAsync(this System.Net.Http.HttpContent content)
         {
-            using (var responseStream = await content.ReadAsStreamAsync())
-            {
-                using (var streamReader = new StreamReader(responseStream))
-                {
-                    using (JsonReader reader = new JsonTextReader(streamReader))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        using (StringWriter textWriter = new StringWriter())
-                        {
-                            serializer.Serialize(textWriter, reader);
-                            return textWriter.ToString();
-                        }
-                    }
-                }
-            }
+            return await content.ReadAsStringAsync();
         }
 
         /// <summary>

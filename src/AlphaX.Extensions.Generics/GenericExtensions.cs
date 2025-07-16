@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 
 namespace AlphaX.Extensions.Generics
@@ -66,6 +67,24 @@ namespace AlphaX.Extensions.Generics
 
             var json = System.Text.Encoding.UTF8.GetString(arrBytes);
             return JsonConvert.DeserializeObject<T>(json);
+        }
+
+
+                /// <summary>
+        /// Gets object prop.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public static PropertyInfo[] GetObjectProp<T>(this T parameter)
+        {
+            PropertyInfo[] propertyInfos;
+
+            propertyInfos = typeof(T).GetProperties();
+
+            Array.Sort(propertyInfos,
+            delegate (PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
+                { return propertyInfo1.Name.CompareTo(propertyInfo2.Name); });
+
+            return propertyInfos;
         }
     }
 }

@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaX.Extensions.Dictionar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaX.Extensions.Document", "src\AlphaX.Extensions.Document\AlphaX.Extensions.Document.csproj", "{3BA73823-0491-4A1B-B442-A02DD0CDFF0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaX.Extensions.Document.Tests", "tests\AlphaX.Extensions.Document.Tests\AlphaX.Extensions.Document.Tests.csproj", "{57872BF5-D75A-491B-9612-E881AD1DF4C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaX.Extensions.Dictionary.Tests", "tests\AlphaX.Extensions.Dictionary.Tests\AlphaX.Extensions.Dictionary.Tests.csproj", "{01DE832A-B882-4A2F-8C59-4035088C5C3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +80,14 @@ Global
 		{3BA73823-0491-4A1B-B442-A02DD0CDFF0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BA73823-0491-4A1B-B442-A02DD0CDFF0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BA73823-0491-4A1B-B442-A02DD0CDFF0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57872BF5-D75A-491B-9612-E881AD1DF4C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57872BF5-D75A-491B-9612-E881AD1DF4C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57872BF5-D75A-491B-9612-E881AD1DF4C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57872BF5-D75A-491B-9612-E881AD1DF4C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01DE832A-B882-4A2F-8C59-4035088C5C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DE832A-B882-4A2F-8C59-4035088C5C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01DE832A-B882-4A2F-8C59-4035088C5C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01DE832A-B882-4A2F-8C59-4035088C5C3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{54AA332A-6C4B-4B25-A2D3-D1D5D690C870} = {873F1D69-7C09-4FD6-83A9-40A3BB83B99F}
@@ -88,5 +100,7 @@ Global
 		{DC0B5A7C-3DD8-4F70-B07B-CE01A6516162} = {DB164792-9F41-4C76-A5D7-8A650E8EC92E}
 		{81EE7527-3C23-4F59-A873-A389497C231B} = {873F1D69-7C09-4FD6-83A9-40A3BB83B99F}
 		{3BA73823-0491-4A1B-B442-A02DD0CDFF0B} = {873F1D69-7C09-4FD6-83A9-40A3BB83B99F}
+		{57872BF5-D75A-491B-9612-E881AD1DF4C9} = {DB164792-9F41-4C76-A5D7-8A650E8EC92E}
+		{01DE832A-B882-4A2F-8C59-4035088C5C3C} = {DB164792-9F41-4C76-A5D7-8A650E8EC92E}
 	EndGlobalSection
 EndGlobal

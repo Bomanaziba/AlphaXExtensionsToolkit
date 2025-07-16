@@ -3,6 +3,7 @@ using Xunit;
 using AlphaX.Extensions.Generics;
 using System.Text.Json;
 using Newtonsoft.Json;
+using AlphaX.Extensions.Generics.Tests.Model;
 
 namespace AlphaX.Extensions.Generics.Tests
 {
@@ -63,13 +64,13 @@ namespace AlphaX.Extensions.Generics.Tests
         public void GetGenericTypeName_ShouldReturnCustomGenericTypeName()
         {
             // Arrange
-            Type type = typeof(CustomGeneric<int, string>);
+            Type type = typeof(CustomGeneric0<int, string>);
 
             // Act
             string result = type.GetGenericTypeName();
 
             // Assert
-            Assert.Equal("CustomGeneric<Int32,String>", result);
+            Assert.Equal("CustomGeneric0<Int32,String>", result);
         }
 
         #endregion
@@ -116,7 +117,7 @@ namespace AlphaX.Extensions.Generics.Tests
         public void ObjectToByteArray_WithValidObject_ReturnsNonEmptyByteArray()
         {
             // Arrange
-            var obj = new TestClass { Id = 1, Name = "Test" };
+            var obj = new TestClass0 { Id = 1, Name = "Test" };
 
             // Act
             byte[] result = obj.ObjectToByteArray();
@@ -127,7 +128,7 @@ namespace AlphaX.Extensions.Generics.Tests
 
             var json = System.Text.Encoding.UTF8.GetString(result);
             // Optionally, verify that the byte array can be result back to the original object
-            var deserialized = JsonConvert.DeserializeObject<TestClass>(json);
+            var deserialized = JsonConvert.DeserializeObject<TestClass0>(json);
             Assert.Equal(obj.Id, deserialized.Id);
             Assert.Equal(obj.Name, deserialized.Name);
         }
@@ -136,7 +137,7 @@ namespace AlphaX.Extensions.Generics.Tests
         public void ObjectToByteArray_WithNullObject_ThrowsArgumentNullException()
         {
             // Arrange
-            TestClass obj = null;
+            TestClass0 obj = null;
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentNullException>(() => obj.ObjectToByteArray());
@@ -150,10 +151,10 @@ namespace AlphaX.Extensions.Generics.Tests
         [Fact]
         public void ByteArrayToObject_WithValidByteArray_ReturnsDeserializedObject()
         {
-            var original = new TestClass { Id = 1, Name = "AlphaX" };
+            var original = new TestClass1 { Id = 1, Name = "AlphaX" };
             byte[] bytes = original.ObjectToByteArray();
 
-            var result = bytes.ByteArrayToObject<TestClass>();
+            var result = bytes.ByteArrayToObject<TestClass1>();
 
             Assert.NotNull(result);
             Assert.Equal(original, result);
@@ -163,38 +164,59 @@ namespace AlphaX.Extensions.Generics.Tests
         public void ByteArrayToObject_WithNull_ThrowsArgumentNullException()
         {
             byte[] bytes = null;
-            Assert.Throws<ArgumentNullException>(() => bytes.ByteArrayToObject<TestClass>());
+            Assert.Throws<ArgumentNullException>(() => bytes.ByteArrayToObject<TestClass1>());
         }
 
         [Fact]
         public void ByteArrayToObject_WithEmptyArray_ThrowsArgumentNullException()
         {
             byte[] bytes = Array.Empty<byte>();
-            Assert.Throws<ArgumentNullException>(() => bytes.ByteArrayToObject<TestClass>());
+            Assert.Throws<ArgumentNullException>(() => bytes.ByteArrayToObject<TestClass1>());
         }
 
         [Fact]
         public void ByteArrayToObject_WithInvalidJson_ThrowsJsonException()
         {
             byte[] bytes = new byte[] { 0x01, 0x02, 0x03 };
-            Assert.Throws<JsonReaderException>(() => bytes.ByteArrayToObject<TestClass>());
+            Assert.Throws<JsonReaderException>(() => bytes.ByteArrayToObject<TestClass1>());
         }
 
         #endregion
-    }
 
-    public class CustomGeneric<T1, T2> { }
+        #region GetObjectProp Tests
 
-    public class TestClass
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public override bool Equals(object obj)
+        [Fact]
+        public void GetObjectProp_ReturnsSortedProperties_ByName()
         {
-            if (obj is not TestClass other) return false;
-            return Id == other.Id && Name == other.Name;
-        }
-        public override int GetHashCode() => HashCode.Combine(Id, Name);
+            var obj = new TestClass2();
+            var props = obj.GetObjectProp();
 
+            Assert.Equal(3, props.Length);
+            Assert.Equal("A", props[0].Name);
+            Assert.Equal("B", props[1].Name);
+            Assert.Equal("C", props[2].Name);
+        }
+
+        [Fact]
+        public void GetObjectProp_WorksForStruct()
+        {
+            var s = new TestStruct0();
+            var props = s.GetObjectProp();
+
+            Assert.Equal(2, props.Length);
+            Assert.Equal("Y", props[0].Name);
+            Assert.Equal("Z", props[1].Name);
+        }
+
+        [Fact]
+        public void GetObjectProp_EmptyClass_ReturnsEmptyArray()
+        {
+            var obj = new EmptyClass0();
+            var props = obj.GetObjectProp();
+
+            Assert.Empty(props);
+        }
+
+        #endregion
     }
 }

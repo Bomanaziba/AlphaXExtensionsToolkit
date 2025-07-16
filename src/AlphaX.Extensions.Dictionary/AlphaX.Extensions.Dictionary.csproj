@@ -33,4 +33,9 @@
 
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlphaX.Extensions.Generics\AlphaX.Extensions.Generics.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-# @DictionaryExtensions
+# DictionaryExtensions
 
 A collection of extension methods for working with `IDictionary<TKey, TValue>` in .NET.
 
@@ -26,10 +26,15 @@ int value = dict.GetValueOrDefault("key", -1);
 
 ## API
 
-- `AddOrUpdate(key, value)`
-- `GetValueOrDefault(key, defaultValue)`
-- `RemoveKeys(IEnumerable<TKey>)`
-- ...and more
+- `ToGetGenericParametersValuesString`
+- `ToGetGenericParametersValuesObject`
+- `DictionaryToObjectFormatter`
+- `DictionaryToObjectString`
+- `CastDictionary`
+
+## Contributing
+
+Contributions are welcome! Please submit issues or pull requests via GitHub.
 
 ## License
 

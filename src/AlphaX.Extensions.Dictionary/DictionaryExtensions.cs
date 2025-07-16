@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using AlphaX.Extensions.Generics;
 using Newtonsoft.Json;
 
 
@@ -12,7 +13,6 @@ namespace AlphaX.Extensions.Dictionary
 
     public static class DictionaryExtensions
     {
-
         /// <summary>
         /// Tos get generic parameters values string.
         /// </summary>
@@ -20,9 +20,14 @@ namespace AlphaX.Extensions.Dictionary
         /// <typeparam name="T"></typeparam>
         public static List<KeyValuePair<string, string>> ToGetGenericParametersValuesString<T>(this T parameter)
         {
+            if (parameter == null)
+            {
+                throw new ArgumentNullException(nameof(parameter)); // Return empty list if parameter is null
+            }
+
             var objectNameValues = new List<KeyValuePair<string, string>>();
 
-            var propertyInfos = GetObjectProp<T>();
+            var propertyInfos = parameter.GetObjectProp();
 
             foreach (PropertyInfo propertyInfo in propertyInfos)
             {
@@ -50,9 +55,14 @@ namespace AlphaX.Extensions.Dictionary
         /// <typeparam name="T"></typeparam>
         public static List<KeyValuePair<string, object>> ToGetGenericParametersValuesObject<T>(this T parameter)
         {
+            if (parameter == null)
+            {
+                throw new ArgumentNullException(nameof(parameter)); // Return empty list if parameter is null
+            }
+
             var objectNameValues = new List<KeyValuePair<string, object>>();
 
-            var propertyInfos = GetObjectProp<T>();
+            var propertyInfos = parameter.GetObjectProp();
 
             foreach (PropertyInfo propertyInfo in propertyInfos)
             {
@@ -77,21 +87,30 @@ namespace AlphaX.Extensions.Dictionary
         /// <typeparam name="T"></typeparam>
         public static T DictionaryToObjectFormatter<T>(this IDictionary<string, object> dictionary)
         {
+            if(dictionary == null)
+            {
+                throw new ArgumentNullException(nameof(dictionary)); // Return default value if dictionary is null
+            }
+
             IDictionary dictionaryObj = (IDictionary)dictionary;
 
-            Dictionary<string, object> newDictionary = CastDictionary(dictionaryObj)
+            Dictionary<string, object> newDictionary = dictionaryObj.CastDictionary()
                                     .ToDictionary(entry => (string)entry.Key, entry => entry.Value);
 
-            return JsonConvert.DeserializeObject<T>(DictionaryToObject(newDictionary));
+            return JsonConvert.DeserializeObject<T>(newDictionary.DictionaryToObjectString());
         }
-
 
         /// <summary>
         /// Dictionaries to object.
         /// </summary>
         /// <param name="dictionary">The dictionary.</param>
-        private static string DictionaryToObject(IDictionary<String, Object> dictionary)
+        public static string DictionaryToObjectString(this IDictionary<String, Object> dictionary)
         {
+            if(dictionary == null)
+            {
+                throw new ArgumentNullException(nameof(dictionary)); // Return empty JSON object if dictionary is null or empty
+            }
+
             var expandoObj = new ExpandoObject();
             var expandoObjCollection = expandoObj as ICollection<KeyValuePair<String, Object>>;
 
@@ -105,34 +124,22 @@ namespace AlphaX.Extensions.Dictionary
             return JsonConvert.SerializeObject(eoDynamic);
         }
 
-
         /// <summary>
         /// Casts dictionary.
         /// </summary>
         /// <param name="dictionary">The dictionary.</param>
-        private static IEnumerable<DictionaryEntry> CastDictionary(IDictionary dictionary)
+        public static IEnumerable<DictionaryEntry> CastDictionary(this IDictionary dictionary)
         {
+            if(dictionary == null)
+            {
+                throw new ArgumentNullException(nameof(dictionary)); // Return empty collection if dictionary is null
+            }
+
             foreach (DictionaryEntry entry in dictionary)
             {
                 yield return entry;
             }
         }
 
-        /// <summary>
-        /// Gets object prop.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public static PropertyInfo[] GetObjectProp<T>()
-        {
-            PropertyInfo[] propertyInfos;
-
-            propertyInfos = typeof(T).GetProperties();
-
-            Array.Sort(propertyInfos,
-            delegate (PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
-                { return propertyInfo1.Name.CompareTo(propertyInfo2.Name); });
-
-            return propertyInfos;
-        }
     }
 }

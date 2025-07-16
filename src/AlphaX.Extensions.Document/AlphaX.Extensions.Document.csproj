@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AlphaX.Extensions.Dictionary\AlphaX.Extensions.Dictionary.csproj" />
+    <ProjectReference Include="..\AlphaX.Extensions.Generics\AlphaX.Extensions.Generics.csproj" />
   </ItemGroup>
 
 </Project>

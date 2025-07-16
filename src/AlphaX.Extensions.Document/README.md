@@ -27,6 +27,10 @@ Add the package to your project:
 dotnet add package AlphaX.Extensions.Document
 ```
 
+## API
+
+- `ExtractDataFromExcel`
+
 ## Contributing
 
 Contributions are welcome! Please submit issues or pull requests via GitHub.
