@@ -108,6 +108,7 @@ dotnet add package AlphaX.Extensions.String
 - `FromHexStringToHexByteArray`
 - `GenerateNamePrefix`
 
+---
 
 ## Contributing
 
@@ -116,7 +117,3 @@ Contributions are welcome! Please submit issues or pull requests via GitHub.
 ## License
 
 MIT
-
----
-
-> For detailed usage and examples, refer to the inline documentation in each source file.
