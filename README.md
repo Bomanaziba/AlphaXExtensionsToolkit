@@ -13,76 +13,109 @@ This document provides an overview of all extension methods available in the fol
 
 ## DictionaryExtensions
 
+### Installation
+
+```shell
+dotnet add package AlphaX.Extensions.Dictionary
+```
+
 ### Methods
 
-- **GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue>, TKey key)**
-    - Returns the value for the specified key or the default value if the key is not found.
-
-- **AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue>, TKey key, TValue value)**
-    - Adds a new key-value pair or updates the value if the key already exists.
+- `ToGetGenericParametersValuesString`
+- `ToGetGenericParametersValuesObject`
+- `DictionaryToObjectFormatter`
+- `DictionaryToObjectString`
+- `CastDictionary`
 
 ---
 
 ## DocumentExtensions
 
+### Installation
+
+Add the package to your project:
+
+```shell
+dotnet add package AlphaX.Extensions.Document
+```
+
 ### Methods
 
-- **ToJson(this Document document)**
-    - Serializes a `Document` object to a JSON string.
-
-- **FromJson(this string json)**
-    - Deserializes a JSON string to a `Document` object.
+- `ExtractDataFromExcel`
 
 ---
 
 ## GenericExtensions
 
+### Installation
+
+```bash
+dotnet add package AlphaX.Extensions.Generics
+```
+
 ### Methods
 
-- **IsNullOrDefault<T>(this T obj)**
-    - Checks if the object is `null` or its default value.
-
-- **SafeCast<T>(this object obj)**
-    - Safely casts an object to type `T`, returning default if the cast fails.
+- `GetGenericTypeName`
+- `ObjectToByteArray`
+- `ByteArrayToObject`
+- `GetObjectProp`
 
 ---
 
 ## HttpContentExtensions
 
+### Installation
+
+```bash
+dotnet add package AlphaX.Extensions.HttpContent
+```
+
 ### Methods
 
-- **ReadAsStringAsyncSafe(this HttpContent content)**
-    - Reads the HTTP content as a string asynchronously, handling exceptions.
-
-- **ReadAsJsonAsync<T>(this HttpContent content)**
-    - Reads the HTTP content and deserializes it to type `T`.
+- `HttpContentToJsonString`
+- `HttpContentToJsonStringAsync`
+- `HttpContentToTypeAsync<T>`
+- `HttpContentToType<T>`
 
 ---
 
 ## SerializerExtensions
 
+### Installation
+
+```bash
+dotnet add package AlphaX.Extensions.Serializer
+```
+
 ### Methods
 
-- **SerializeToJson<T>(this T obj)**
-    - Serializes an object to a JSON string.
-
-- **DeserializeFromJson<T>(this string json)**
-    - Deserializes a JSON string to an object of type `T`.
+- `DeserializeFromXml`
+- `SerializeToXml`
 
 ---
 
 ## StringExtensions
 
+### Installation
+
+```bash
+dotnet add package AlphaX.Extensions.String
+```
+
 ### Methods
 
-- **IsNullOrEmpty(this string str)**
-    - Checks if a string is `null` or empty.
+- `FromHexStringToBase64String`
+- `FromHexStringToHexByteArray`
+- `GenerateNamePrefix`
 
-- **ToTitleCase(this string str)**
-    - Converts a string to title case.
 
-- **RemoveWhitespace(this string str)**
-    - Removes all whitespace from a string.
+## Contributing
+
+Contributions are welcome! Please submit issues or pull requests via GitHub.
+
+## License
+
+MIT
 
 ---
 
