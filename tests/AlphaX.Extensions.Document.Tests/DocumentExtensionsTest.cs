@@ -16,7 +16,7 @@ namespace AlphaX.Extensions.Document.Tests
     public class DocumentExtensionsTest
     {
 
-
+        #region ExtractDataFromExcel Tests
         [Fact]
         public void ExtractDataFromExcel_ShouldThrowArgumentException_WhenFileIsNull()
         {
@@ -91,5 +91,102 @@ namespace AlphaX.Extensions.Document.Tests
             Assert.Equal("28", result[1].Age);
         }
 
+        #endregion
+
+        #region GetCellValue Tests
+
+        [Fact]
+        public void GetCellValue_ShouldReturnStringValue_WhenCellTypeIsString()
+        {
+            var workbook = new XSSFWorkbook();
+            var sheet = workbook.CreateSheet();
+            var row = sheet.CreateRow(0);
+            var cell = row.CreateCell(0, NPOI.SS.UserModel.CellType.String);
+            cell.SetCellValue("TestValue");
+
+            var result = DocumentExtensions.GetCellValue(cell);
+
+            Assert.Equal("TestValue", result);
+        }
+
+        [Fact]
+        public void GetCellValue_ShouldReturnNumericValue_WhenCellTypeIsNumeric()
+        {
+            var workbook = new XSSFWorkbook();
+            var sheet = workbook.CreateSheet();
+            var row = sheet.CreateRow(0);
+            var cell = row.CreateCell(0, NPOI.SS.UserModel.CellType.Numeric);
+            cell.SetCellValue(123.45);
+
+            var result = DocumentExtensions.GetCellValue(cell);
+
+            Assert.Equal(123.45, result);
+        }
+
+        [Fact]
+        public void GetCellValue_ShouldReturnDateValue_WhenCellTypeIsNumericAndDateFormatted()
+        {
+            var workbook = new XSSFWorkbook();
+            var sheet = workbook.CreateSheet();
+            var row = sheet.CreateRow(0);
+            var cell = row.CreateCell(0, NPOI.SS.UserModel.CellType.Numeric);
+            var date = new DateTime(2023, 1, 1);
+            cell.SetCellValue(date);
+
+            // Set cell style to date format
+            var style = workbook.CreateCellStyle();
+            var format = workbook.CreateDataFormat();
+            style.DataFormat = format.GetFormat("m/d/yy");
+            cell.CellStyle = style;
+
+            // NPOI automatically sets the date format, so DateUtil.IsCellDateFormatted should return true
+            var result = DocumentExtensions.GetCellValue(cell);
+
+            Assert.IsType<DateTime>(result);
+            Assert.Equal(date, (DateTime)result);
+        }
+
+        [Fact]
+        public void GetCellValue_ShouldReturnBooleanValue_WhenCellTypeIsBoolean()
+        {
+            var workbook = new XSSFWorkbook();
+            var sheet = workbook.CreateSheet();
+            var row = sheet.CreateRow(0);
+            var cell = row.CreateCell(0, NPOI.SS.UserModel.CellType.Boolean);
+            cell.SetCellValue(true);
+
+            var result = DocumentExtensions.GetCellValue(cell);
+
+            Assert.Equal(true, result);
+        }
+
+        [Fact]
+        public void GetCellValue_ShouldReturnFormula_WhenCellTypeIsFormula()
+        {
+            var workbook = new XSSFWorkbook();
+            var sheet = workbook.CreateSheet();
+            var row = sheet.CreateRow(0);
+            var cell = row.CreateCell(0, NPOI.SS.UserModel.CellType.Formula);
+            cell.CellFormula = "SUM(1,2)";
+
+            var result = DocumentExtensions.GetCellValue(cell);
+
+            Assert.Equal("SUM(1,2)", result);
+        }
+
+        [Fact]
+        public void GetCellValue_ShouldReturnNull_WhenCellTypeIsBlank()
+        {
+            var workbook = new XSSFWorkbook();
+            var sheet = workbook.CreateSheet();
+            var row = sheet.CreateRow(0);
+            var cell = row.CreateCell(0, NPOI.SS.UserModel.CellType.Blank);
+
+            var result = DocumentExtensions.GetCellValue(cell);
+
+            Assert.Null(result);
+        }
+
+        #endregion
     }
 }

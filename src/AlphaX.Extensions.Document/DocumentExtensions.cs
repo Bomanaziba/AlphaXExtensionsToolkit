@@ -102,7 +102,12 @@ namespace AlphaX.Extensions.Document
             return dataList;
         }
 
-        private static object GetCellValue(ICell cell)
+
+        /// <summary>
+        /// Gets cell value.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        public static object GetCellValue(ICell cell)
         {
             switch (cell.CellType)
             {
